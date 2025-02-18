@@ -256,6 +256,23 @@ public class EpicFarming extends SongodaPlugin {
 
             this.farmManager.addFarms(this.dataManager.loadBatch(Farm.class, "active_farms"));
             this.boostManager.addBoosts(this.dataManager.loadBatch(BoostData.class, "boosted_players"));
+
+        });
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+            List<Farm> farms = this.dataManager.loadBatch(Farm.class, "active_farms");
+
+            //System.out.println("Loaded " + farms.size() + " farms from database."); // Debugging
+
+            for (Farm farm : farms) {
+                //System.out.println("Farm ID: " + farm.getId() + " | Location: " + farm.getLocation()); // Debugging
+
+                List<ItemStack> items = DataHelper.loadItemsForFarm(farm.getId());
+                farm.setItems(items);
+
+                //System.out.println("Farm ID " + farm.getId() + " has " + items.size() + " items."); // Debugging
+            }
+
+            this.farmManager.addFarms(farms);
         });
     }
 

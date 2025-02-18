@@ -1,5 +1,6 @@
 package com.craftaro.epicfarming.farming;
 
+import com.craftaro.epicfarming.utils.DataHelper;
 import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
 import com.craftaro.epicfarming.farming.levels.Level;
 import com.craftaro.epicfarming.farming.levels.LevelManager;
@@ -7,10 +8,12 @@ import com.craftaro.epicfarming.settings.Settings;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FarmManager {
@@ -28,6 +31,11 @@ public class FarmManager {
 
     public void addFarms(Collection<Farm> farms) {
         for (Farm farm : farms) {
+            //System.out.println("Registering Farm ID: " + farm.getId() + " at " + farm.getLocation()); // Debugging
+
+            List<ItemStack> items = DataHelper.loadItemsForFarm(farm.getId());
+            farm.setItems(items);
+
             this.registeredFarms.put(farm.getLocation(), farm);
         }
     }
