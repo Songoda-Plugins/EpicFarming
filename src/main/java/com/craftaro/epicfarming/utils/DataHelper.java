@@ -8,6 +8,8 @@ import com.craftaro.epicfarming.farming.Farm;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DataHelper {
@@ -59,9 +61,7 @@ public class DataHelper {
 
             List<Query> queries = new ArrayList<>();
             for (ItemStack item : farm.getItems()) {
-                String serialized = Serializers.serialize(item);
-                //System.out.println("🔹 Saving Item: " + serialized); // DEBUG LOG
-
+                String serialized = ItemSerializer.toBase64(Collections.singletonList(item));
                 queries.add(dslContext.insertInto(DSL.table(tablePrefix + "items"))
                         .columns(DSL.field("farm_id"), DSL.field("item"))
                         .values(farm.getId(), serialized));
@@ -69,6 +69,7 @@ public class DataHelper {
             dslContext.batch(queries).execute();
         });
     }
+
     public static List<ItemStack> loadItemsForFarm(int farmId) {
         List<ItemStack> items = new ArrayList<>();
 
@@ -80,17 +81,19 @@ public class DataHelper {
                     .fetchInto(String.class);
 
             for (String serializedItem : serializedItems) {
-                //System.out.println("🔸 Loaded raw item data: " + serializedItem); // DEBUG LOG
-
-                ItemStack item = Serializers.deserialize(serializedItem);
-                if (item != null) {
-                    items.add(item);
-                } else {
-                    System.out.println("❌ Failed to deserialize item: " + serializedItem);
+                try {
+                    List<ItemStack> deserializedItems = ItemSerializer.fromBase64(serializedItem);
+                    if (deserializedItems != null && !deserializedItems.isEmpty()) {
+                        items.addAll(deserializedItems);
+                    } else {
+                        System.err.println("❌ Failed to deserialize item: " + serializedItem);
+                    }
+                } catch (Exception e) {
+                    System.err.println("❌ Error decoding Base64 item: " + serializedItem);
+                    e.printStackTrace();
                 }
             }
         });
-
         return items;
     }
 }
