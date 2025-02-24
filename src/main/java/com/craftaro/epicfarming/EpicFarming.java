@@ -18,6 +18,7 @@ import com.craftaro.epicfarming.commands.CommandGiveFarmItem;
 import com.craftaro.epicfarming.commands.CommandReload;
 import com.craftaro.epicfarming.commands.CommandSettings;
 import com.craftaro.epicfarming.database.migrations._1_InitialMigration;
+import com.craftaro.epicfarming.database.migrations._2_subsequentMigration;
 import com.craftaro.epicfarming.farming.Farm;
 import com.craftaro.epicfarming.farming.FarmManager;
 import com.craftaro.epicfarming.farming.FarmType;
@@ -129,7 +130,7 @@ public class EpicFarming extends SongodaPlugin {
                 );
 
         // Database stuff.
-        initDatabase(Collections.singletonList(new _1_InitialMigration()));
+        initDatabase(new _1_InitialMigration(), new _2_subsequentMigration());
         DataHelper.init(this);
 
         this.loadLevelManager();
@@ -253,23 +254,20 @@ public class EpicFarming extends SongodaPlugin {
             if (converted) {
                 Bukkit.getConsoleSender().sendMessage("[" + getDescription().getName() + "] " + ChatColor.GREEN + "Conversion complete :)");
             }
-
-            this.farmManager.addFarms(this.dataManager.loadBatch(Farm.class, "active_farms"));
             this.boostManager.addBoosts(this.dataManager.loadBatch(BoostData.class, "boosted_players"));
 
-        });
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
             List<Farm> farms = this.dataManager.loadBatch(Farm.class, "active_farms");
 
-            //System.out.println("Loaded " + farms.size() + " farms from database."); // Debugging
+            getLogger().info("Loaded " + farms.size() + " farms from database.");
 
             for (Farm farm : farms) {
-                //System.out.println("Farm ID: " + farm.getId() + " | Location: " + farm.getLocation()); // Debugging
+                getLogger().info("Farm ID: " + farm.getId() + " | Location: " + farm.getLocation()); // Debugging
 
                 List<ItemStack> items = DataHelper.loadItemsForFarm(farm.getId());
                 farm.setItems(items);
 
-                //System.out.println("Farm ID " + farm.getId() + " has " + items.size() + " items."); // Debugging
+                getLogger().info("Farm ID " + farm.getId() + " has " + items.size() + " items. first item is: " + items.get(0).toString()); // Debugging
+
             }
 
             this.farmManager.addFarms(farms);
