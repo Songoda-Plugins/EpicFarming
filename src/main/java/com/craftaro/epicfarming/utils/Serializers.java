@@ -47,6 +47,7 @@ public class Serializers {
     }
 
     public static ItemStack deserialize(String serializedItem) {
+        serializedItem = hexToString(serializedItem);
         String[] strings = serializedItem.split(" ");
         Map<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();
         String[] args;
@@ -175,5 +176,13 @@ public class Serializers {
             item.setItemMeta(meta);
         } catch (Exception exception) {
         }
+    }
+    public static String hexToString(String hex) {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < hex.length(); i += 2) {
+            String str = hex.substring(i, i + 2);
+            output.append((char) Integer.parseInt(str, 16));
+        }
+        return output.toString();
     }
 }
