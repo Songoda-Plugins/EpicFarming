@@ -261,7 +261,6 @@ public class EpicFarming extends SongodaPlugin {
             getLogger().info("Loaded " + farms.size() + " farms from database.");
 
             for (Farm farm : farms) {
-                getLogger().info("Farm ID: " + farm.getId() + " | Location: " + farm.getLocation()); // Debugging
 
                 List<ItemStack> items = DataHelper.loadItemsForFarm(farm.getId());
                 if (items.size() > 1) {
@@ -269,8 +268,6 @@ public class EpicFarming extends SongodaPlugin {
                 } else {
                     farm.addItem(items.get(0));
                 }
-
-                getLogger().info("Farm ID " + farm.getId() + " has " + items.size() + " items. first item is: " + items.get(0).toString()); // Debugging
 
             }
 
