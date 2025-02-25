@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 public class _1_InitialMigration extends DataMigration {
     public _1_InitialMigration() {
-        super(2);
+        super(1);
     }
 
     @Override
