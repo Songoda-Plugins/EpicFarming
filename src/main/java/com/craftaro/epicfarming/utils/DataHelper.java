@@ -86,11 +86,10 @@ public class DataHelper {
                     if (deserializedItems != null && !deserializedItems.isEmpty()) {
                         items.addAll(deserializedItems);
                     } else {
-                        System.err.println("❌ Failed to deserialize item: " + serializedItem);
+                        plugin.getLogger().severe("❌ Failed to deserialize item: " + serializedItem);
                     }
                 } catch (Exception e) {
-                    System.err.println("❌ Error decoding Base64 item: " + serializedItem);
-                    e.printStackTrace();
+                    plugin.getLogger().severe("❌ Error decoding Base64 item: " + serializedItem);
                 }
             }
         });
