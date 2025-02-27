@@ -263,12 +263,13 @@ public class EpicFarming extends SongodaPlugin {
             for (Farm farm : farms) {
 
                 List<ItemStack> items = DataHelper.loadItemsForFarm(farm.getId());
-                if (items.size() > 1) {
-                    farm.setItems(items);
-                } else {
-                    farm.addItem(items.get(0));
+                if (!items.isEmpty()) {
+                    if (items.size() > 1) {
+                        farm.setItems(items);
+                    } else {
+                        farm.addItem(items.get(0));
+                    }
                 }
-
             }
 
             this.farmManager.addFarms(farms);
