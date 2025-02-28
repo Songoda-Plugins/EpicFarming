@@ -13,11 +13,13 @@ public class _2_subsequentMigration extends DataMigration {
 
     @Override
     public void migrate(Connection connection, String tablePrefix) throws SQLException {
-
-        // Edit items.
         try (Statement statement = connection.createStatement()) {
-            // Change the data type of the 'item' column in the 'items'  table
-            statement.execute("ALTER TABLE " + tablePrefix + "items ALTER COLUMN item SET DATA TYPE TEXT");
+            try {
+                statement.execute("ALTER TABLE " + tablePrefix + "items ALTER COLUMN item SET DATA TYPE TEXT");
+            } catch (SQLException e) {
+                System.err.println("H2 syntax failed, trying with MySQL...");
+                statement.execute("ALTER TABLE " + tablePrefix + "items MODIFY COLUMN item TEXT");
+            }
         }
     }
 }
