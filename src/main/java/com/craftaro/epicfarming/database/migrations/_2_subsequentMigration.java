@@ -16,7 +16,7 @@ public class _2_subsequentMigration extends DataMigration {
 
     @Override
     public void migrate(Connection connection, String tablePrefix) throws SQLException {
-        // First, fix any invalid Base64 data in the items table.
+        // First, update only rows with invalid Base64 data.
         fixInvalidData(connection, tablePrefix);
 
         // Then, alter the column to TEXT.
@@ -31,33 +31,33 @@ public class _2_subsequentMigration extends DataMigration {
     }
 
     /**
-     * Scans the items table and replaces any invalid Base64 data with an empty string.
+     * Iterates over all rows in the items table and replaces any invalid Base64 data with an empty string.
+     * Only rows where the data is invalid will be updated.
      */
     private void fixInvalidData(Connection connection, String tablePrefix) throws SQLException {
-        String selectSQL = "SELECT farm_id, item FROM " + tablePrefix + "items";
+        String selectSQL = "SELECT id, item FROM " + tablePrefix + "items";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(selectSQL)) {
-
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String item = rs.getString("item");
-                // Check if this data is valid Base64.
+
                 if (!isValidBase64(item)) {
-                    // Update the row: use both farm_id and the current item value as conditions.
-                    updateInvalidItem(connection, tablePrefix, rs.getInt("farm_id"), item);
+                    updateInvalidItem(connection, tablePrefix, id);
                 }
             }
         }
     }
 
     /**
-     * Returns true if the provided string is a valid Base64 encoded string.
-     * An empty string is considered valid.
+     * Checks if a string is a valid Base64-encoded value.
+     * An empty or null string is considered valid.
      */
     private boolean isValidBase64(String data) {
         if (data == null || data.isEmpty()) {
             return true;
         }
-        // Check if the length is a multiple of 4.
+        // Base64 strings should have a length that's a multiple of 4.
         if (data.length() % 4 != 0) {
             return false;
         }
@@ -70,13 +70,12 @@ public class _2_subsequentMigration extends DataMigration {
     }
 
     /**
-     * Updates a specific row by replacing the invalid item data with an empty string.
+     * Updates a row (identified by its id) by replacing the invalid item data with an empty string.
      */
-    private void updateInvalidItem(Connection connection, String tablePrefix, int farmId, String item) throws SQLException {
-        String updateSQL = "UPDATE " + tablePrefix + "items SET item = '' WHERE farm_id = ? AND item = ?";
+    private void updateInvalidItem(Connection connection, String tablePrefix, int id) throws SQLException {
+        String updateSQL = "UPDATE " + tablePrefix + "items SET item = '' WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(updateSQL)) {
-            pstmt.setInt(1, farmId);
-            pstmt.setString(2, item);
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
         }
     }
