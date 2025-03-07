@@ -82,11 +82,13 @@ public class DataHelper {
 
             for (String serializedItem : serializedItems) {
                 try {
-                    List<ItemStack> deserializedItems = ItemSerializer.fromBase64(serializedItem);
-                    if (deserializedItems != null && !deserializedItems.isEmpty()) {
-                        items.addAll(deserializedItems);
-                    } else {
-                        plugin.getLogger().severe("❌ Failed to deserialize item: " + serializedItem);
+                    if (!serializedItem.isEmpty() && serializedItem.length() % 4 == 0) {
+                        List<ItemStack> deserializedItems = ItemSerializer.fromBase64(serializedItem);
+                        if (deserializedItems != null && !deserializedItems.isEmpty()) {
+                            items.addAll(deserializedItems);
+                        } else {
+                            plugin.getLogger().severe("❌ Failed to deserialize item: " + serializedItem);
+                        }
                     }
                 } catch (Exception e) {
                     plugin.getLogger().severe("❌ Error decoding Base64 item: " + serializedItem);
