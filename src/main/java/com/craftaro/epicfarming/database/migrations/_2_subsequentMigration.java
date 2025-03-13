@@ -24,7 +24,6 @@ public class _2_subsequentMigration extends DataMigration {
             try {
                 statement.execute("ALTER TABLE " + tablePrefix + "items ALTER COLUMN item SET DATA TYPE TEXT");
             } catch (SQLException e) {
-                System.err.println("H2 syntax failed, trying with MySQL...");
                 statement.execute("ALTER TABLE " + tablePrefix + "items MODIFY COLUMN item TEXT");
             }
         }
@@ -35,15 +34,17 @@ public class _2_subsequentMigration extends DataMigration {
      * Only rows where the data is invalid will be updated.
      */
     private void fixInvalidData(Connection connection, String tablePrefix) throws SQLException {
-        String selectSQL = "SELECT id, item FROM " + tablePrefix + "items";
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(selectSQL)) {
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String item = rs.getString("item");
+        if (hasIdColumn(connection, tablePrefix)) {
+            String selectSQL = "SELECT id, item FROM " + tablePrefix + "items";
+            try (Statement stmt = connection.createStatement();
+                 ResultSet rs = stmt.executeQuery(selectSQL)) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String item = rs.getString("item");
 
-                if (!isValidBase64(item)) {
-                    updateInvalidItem(connection, tablePrefix, id);
+                    if (!isValidBase64(item)) {
+                        updateInvalidItem(connection, tablePrefix, id);
+                    }
                 }
             }
         }
@@ -77,6 +78,11 @@ public class _2_subsequentMigration extends DataMigration {
         try (PreparedStatement pstmt = connection.prepareStatement(updateSQL)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
+        }
+    }
+    private boolean hasIdColumn(Connection connection, String tablePrefix) throws SQLException {
+        try (ResultSet rs = connection.getMetaData().getColumns(null, null, tablePrefix + "items", "id")) {
+            return rs.next();
         }
     }
 }

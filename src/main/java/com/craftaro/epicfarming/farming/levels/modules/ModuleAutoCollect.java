@@ -102,7 +102,9 @@ public class ModuleAutoCollect extends Module {
                 if (!((Ageable) entity).isAdult()) {
                     continue;
                 }
-                entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 2);
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 2);
+                });
                 if (!isEnabled(farm)) {
                     ticksLived.remove(entity);
                     Bukkit.getScheduler().runTask(this.plugin, () ->
