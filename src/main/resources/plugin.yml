@@ -3,7 +3,7 @@ description: ${project.description}
 version: ${project.version}
 api-version: 1.13
 
-main: com.craftaro.epicfarming.EpicFarming
+main: com.songoda.epicfarming.EpicFarming
 softdepend:
   - Arconix
   - ASkyBlock
@@ -26,7 +26,7 @@ softdepend:
   - WildStacker
   - WorldGuard
 
-author: Craftaro
+author: Songoda
 website: ${project.url}
 
 # TODO: cleanup commands section
