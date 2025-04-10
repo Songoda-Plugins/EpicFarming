@@ -3,7 +3,7 @@
 
     <groupId>com.songoda</groupId>
     <artifactId>EpicFarming</artifactId>
-    <version>5.0.0</version>
+    <version>5.0.1</version>
 
     <name>EpicFarming</name>
     <description>Allow your players to grow crops faster, automatically replant, harvest and store crops and animal produce in the farm's inventory, as well as much more</description>
