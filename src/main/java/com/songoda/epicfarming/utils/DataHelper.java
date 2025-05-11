@@ -80,7 +80,7 @@ public class DataHelper {
                     .fetchInto(String.class);
 
             for (String serializedItem : serializedItems) {
-                if (!serializedItem.isEmpty() && serializedItem != null) {
+                if (serializedItem != null && !serializedItem.isEmpty()) {
                     try {
                         List<ItemStack> deserializedItems = ItemSerializer.fromBase64(serializedItem);
                         if (deserializedItems != null && !deserializedItems.isEmpty()) {
