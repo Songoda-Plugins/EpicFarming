@@ -232,7 +232,9 @@ public class ModuleAutoCollect extends Module {
     }
 
     private boolean doCropDrop(Farm farm, XMaterial material) {
-        if (material == null || farm == null || !XBlock.isCrop(material) || !this.plugin.isEnabled()) {
+        if (material == null || farm == null ||
+                (!XBlock.isCrop(material) && material != XMaterial.SWEET_BERRY_BUSH) ||
+                !this.plugin.isEnabled()) {
             return false;
         }
 

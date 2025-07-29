@@ -35,7 +35,7 @@ public class GrowthTask extends BukkitRunnable {
             }
 
             Optional<XMaterial> blockMat = CompatibleMaterial.getMaterial(crop.getLocation().getBlock().getType());
-            if (!blockMat.isPresent() || !XBlock.isCrop(blockMat.get())) {
+            if (!blockMat.isPresent() || (!XBlock.isCrop(blockMat.get()) && blockMat.get() != XMaterial.SWEET_BERRY_BUSH)) {
                 toRemove.add(crop);
                 continue;
             }
