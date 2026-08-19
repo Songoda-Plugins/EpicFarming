@@ -1,10 +1,23 @@
 <!--suppress HtmlDeprecatedAttribute -->
 <div align="center">
 <img src="docs/Logo.png" width="128px">
+</div>
 
 # EpicFarming
-**Allow your players to grow crops faster, automatically replant, harvest and store crops and animal produce in the farm&#39;s inventory, as well as much more.**
 
+> **[Official EpicFarming website][Plugin page]**
+>
+> For the latest downloads, supported Minecraft versions, documentation,
+> installation instructions, compatibility information, updates, and support,
+> visit the Songoda Reborn page above.
+
+EpicFarming is a Minecraft farming-automation server plugin developed and maintained by
+**Songoda Reborn**.
+
+It supports faster crop growth, automatic replanting and harvesting, and storage for
+crops and animal produce in configurable farm inventories.
+
+<div align="center">
 
 [![Discord][Discord shield]][Discord invite]
 <br>
@@ -13,27 +26,23 @@
 </div>
 
 
-## Download (Marketplace)
-You can visit [our marketplace][Plugin page] to download EpicFarming as well as take a
-look at many other fantastic plugins which are sure to catch your eye.
+## Downloads
+Downloads and supported Minecraft versions are available from the
+[Songoda Reborn plugin page][Plugin page].
 
 ## Documentation
-You can find all the information about EpicFarming, including dependencies, commands, permissions and incompatible
-plugins on [our wiki][Plugin wiki].
-
-Feel free to also contribute to the wiki as a way to help others in the community with using the plugin.
+The [EpicFarming wiki][Plugin wiki] is maintained by Songoda Reborn and covers
+installation, configuration, commands, permissions, dependencies, and compatibility.
 
 ## Support
-If you encounter any issues while using the plugin, feel free to contact us on
-[our Discord server][Discord invite].
+For help with EpicFarming, join our [Discord server][Discord invite].
 
 ## Suggestions
-For suggestions about features you think should be added to the plugin to increase its functionality, feel free to
-create a thread over on [our Discord server][Discord invite].
+Share feature suggestions and feedback through our [Discord server][Discord invite].
 
 
-[Plugin page]: https://songoda.com/product/5
-[Plugin wiki]: https://wiki.songoda.com/EpicFarming-1130f108970281f0b6feccad1b00a4a6
+[Plugin page]: https://songoda-reborn.com/plugins/epicfarming
+[Plugin wiki]: https://songoda-reborn.com/plugins/epicfarming/wiki
 [Discord invite]: https://discord.gg/vtuJUfebrd
 
 [Discord shield]: https://img.shields.io/discord/1214289374506917889?color=5865F2&label=Discord&logo=discord&logoColor=5865F2
