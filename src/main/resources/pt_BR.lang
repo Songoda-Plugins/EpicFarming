@@ -1,0 +1,62 @@
+# Mensagens Gerais
+
+general:
+  nametag:
+    prefix: '&8[&6EpicFarming&8]'
+    farm: '&eNível %level% &fFazenda'
+    lore: ''
+  interface:
+    next: Próximo
+    previous: Anterior
+    unlocked: Desbloqueado
+    'on': 'Ligado'
+    'off': 'Desligado'
+    both: Ambos
+    crops: Cultivos
+    livestock: Gado
+    all: Todos
+    noseeds: Sem Sementes
+
+# Mensagens da Interface
+
+interface:
+  button:
+    upgradewithxp: '&aAprimorar com XP'
+    upgradewithxplore: '&7Custo: &a%cost% Níveis'
+    upgradewitheconomy: '&aAprimorar com ECO'
+    upgradewitheconomylore: '&7Custo: &a$%cost%'
+    level: '&6Próximo Nível &7%level%'
+    radius: '&7Raio: &6%radius%'
+    speed: '&7Velocidade: &6%speed%x'
+    autocollect: '&7Coleta Automática: &6%status%'
+    collectiontype: '&7Tipo de Coleta: &6%status%'
+    autoreplant: '&7Replantio Automático: &6%status%'
+    autobreeding: '&7Reprodução Automática: &6%status%'
+    autobutcher: '&7Abate Automático: &6%status%'
+    pages: '&7Páginas: &6%amount%'
+    boostedstats: '&a&lAtualmente impulsionado!|&7Taxa de rendimento multiplicada por &6%amount%x&7.|&7Expira em &6%time%&7.'
+    farmtype: '&7Tipo de Fazenda: &6%type%'
+    farmtypelore: '&7Clique para alternar o tipo da sua fazenda.'
+    functiontoggle: '&7Clique para alternar esta função.'
+
+# Mensagens de Comando
+
+command:
+  give:
+    success: '&7Você recebeu um item de fazenda &6nível %level%&7.'
+
+# Mensagens de Evento
+
+event:
+  general:
+    nopermission: '&cVocê não tem permissão para fazer isso.'
+    protected: '&cEsta fazenda está protegida e você não pode acessá-la.'
+  upgrade:
+    cannotafford: '&cVocê não pode pagar por esta melhoria.'
+    success: '&7Você aprimorou esta fazenda com sucesso para o &6nível %level%&7!'
+    maxed: '&6Esta fazenda está no nível máximo.'
+    successmaxed: '&7Você atingiu o nível máximo desta fazenda em &6%level%x&7.'
+  limit:
+    hit: '&7Você só pode ter &6%limit% &7fazendas ao mesmo tempo.'
+  warning:
+    noauto: '&6Aviso: &cEste item não é cultivado automaticamente'
