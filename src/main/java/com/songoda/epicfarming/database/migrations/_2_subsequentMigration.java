@@ -16,7 +16,9 @@ public class _2_subsequentMigration extends DataMigration {
 
     @Override
     public void migrate(Connection connection, String tablePrefix) throws SQLException {
-        // First, update only rows with invalid Base64 data.
+        // handle rows with invalid Base64 data.
+        wipeNonBase64Values(connection, tablePrefix);
+
         fixInvalidData(connection, tablePrefix);
 
         // Then, alter the column to TEXT.
@@ -46,6 +48,23 @@ public class _2_subsequentMigration extends DataMigration {
                         updateInvalidItem(connection, tablePrefix, id);
                     }
                 }
+            }
+        }
+    }
+
+    private void wipeNonBase64Values(Connection connection, String tablePrefix) throws SQLException {
+        String tbl = tablePrefix + "items";
+        try (Statement st = connection.createStatement()) {
+            // MySQL / MariaDB path
+            int rows = st.executeUpdate(
+                    "UPDATE " + tbl + " SET item = '' " +
+                            "WHERE item IS NOT NULL AND item REGEXP('[^A-Za-z0-9+/=]')");
+            if (rows == 0) {
+                // H2 or drivers that don’t support the REGEXP operator above
+                st.executeUpdate(
+                        "UPDATE " + tbl + " SET item = '' " +
+                                "WHERE item IS NOT NULL AND " +
+                                "REGEXP_REPLACE(item, '[A-Za-z0-9+/=]', '') <> ''");
             }
         }
     }
